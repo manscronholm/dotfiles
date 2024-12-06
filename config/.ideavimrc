@@ -119,6 +119,9 @@ let g:WhichKeyDesc_errors_prev = "<leader>ep Go to previous error in solution"
 " -----------------------------------------------------------------------------------
 "                               ### Mappings ###
 
+" Breakline with CTRL-J outside of insert mode.
+nnoremap <C-j> i<Enter><Esc>
+
 " Editing and Reloading the Config
 nnoremap \e :e ~/.ideavimrc<CR>
 nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
