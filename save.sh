@@ -19,7 +19,11 @@ fi
 
 # Copy nvim directory
 if [ -d "$NVIM_CONFIG" ]; then
-    rsync -av --delete "$NVIM_CONFIG" "$BACKUP_DIR/"
+    rsync -av --delete \
+        --exclude='.git' \
+        --exclude='.github' \
+        --exclude='.gitignore' \
+        "$NVIM_CONFIG" "$BACKUP_DIR/"
     echo "Copied nvim config to $BACKUP_DIR"
 else
     echo "Warning: $NVIM_CONFIG not found"
