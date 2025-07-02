@@ -4,6 +4,8 @@
 ZSHRC="$HOME/.zshrc"
 NVIM_CONFIG="$HOME/.config/nvim"
 KITTY_CONFIG="$HOME/.config/kitty/kitty.conf"
+LAZYGIT_CONFIG="$HOME/.config/lazygit/config.yml"
+WAYBAR_CONFIG="$HOME/.config/waybar"
 
 
 # Define backup directory
@@ -35,4 +37,24 @@ if [ -f "$KITTY_CONFIG" ]; then
     echo "Copied kitty.conf to $BACKUP_DIR"
 else
     echo "Warning: $KITTY_CONFIG not found"
+fi
+
+# Copy lazygit config
+if [ -f "$LAZYGIT_CONFIG" ]; then
+    cp "$LAZYGIT_CONFIG" "$BACKUP_DIR/"
+    echo "Copied kitty.conf to $BACKUP_DIR"
+else
+    echo "Warning: $LAZYGIT_CONFIG not found"
+fi
+
+# Copy waybar directory
+if [ -d "$WAYBAR_CONFIG" ]; then
+    rsync -av --delete \
+        --exclude='.git' \
+        --exclude='.github' \
+        --exclude='.gitignore' \
+        "$WAYBAR_CONFIG" "$BACKUP_DIR/"
+    echo "Copied nvim config to $BACKUP_DIR"
+else
+    echo "Warning: $WAYBAR_CONFIG not found"
 fi
