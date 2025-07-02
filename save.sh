@@ -7,6 +7,9 @@ KITTY_CONFIG="$HOME/.config/kitty/kitty.conf"
 LAZYGIT_CONFIG="$HOME/.config/lazygit/config.yml"
 WAYBAR_CONFIG="$HOME/.config/waybar"
 HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
+HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
+
+WALLPAPER="$HOME/.config/hypr/wallpaper/wallpaper.jpg"
 
 
 # Define backup directory
@@ -66,5 +69,21 @@ if [ -f "$HYPRLAND_CONFIG" ]; then
     echo "Copied hyprland config to $BACKUP_DIR/hyprland"
 else
     echo "Warning: $HYPRLAND_CONFIG not found"
+fi
+
+# Copy hyprpaper config
+if [ -f "$HYPRPAPER_CONFIG" ]; then
+    cp "$HYPRPAPER_CONFIG" "$BACKUP_DIR/hyprpaper"
+    echo "Copied hyprpaper config to $BACKUP_DIR/hyprpaper"
+else
+    echo "Warning: $HYPRPAPER_CONFIG not found"
+fi
+
+# Copy wallpaper config
+if [ -f "$WALLPAPER" ]; then
+    cp "$WALLPAPER" "$BACKUP_DIR/wallpaper"
+    echo "Copied wallpaper config to $BACKUP_DIR/wallpaper"
+else
+    echo "Warning: $WALLPAPER not found"
 fi
 
