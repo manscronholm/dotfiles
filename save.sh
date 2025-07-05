@@ -9,6 +9,7 @@ WAYBAR_CONFIG="$HOME/.config/waybar"
 HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
 HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
 WOFI_CONFIG="$HOME/.config/wofi"
+SWAYNC_CONFIG="$HOME/.config/swaync"
 
 WALLPAPER="$HOME/.config/hypr/wallpaper/wallpaper.jpg"
 
@@ -111,4 +112,18 @@ if [ -d "$WOFI_CONFIG" ]; then
 else
     echo "Warning: $WOFI_CONFIG not found"
 fi
+
+# Copy swaync directory
+if [ -d "$SWAYNC_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/swaync"
+    rsync -av --delete \
+        --exclude='.git' \
+        --exclude='.github' \
+        --exclude='.gitignore' \
+        "$SWAYNC_CONFIG/" "$BACKUP_DIR/swaync"
+    echo "Copied swaync config to $BACKUP_DIR/swaync"
+else
+    echo "Warning: $SWAYNC_CONFIG not found"
+fi
+
 
