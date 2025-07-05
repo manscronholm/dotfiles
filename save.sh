@@ -8,6 +8,7 @@ LAZYGIT_CONFIG="$HOME/.config/lazygit/config.yml"
 WAYBAR_CONFIG="$HOME/.config/waybar"
 HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
 HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
+WOFI_CONFIG="$HOME/.config/wofi"
 
 WALLPAPER="$HOME/.config/hypr/wallpaper/wallpaper.jpg"
 
@@ -96,5 +97,18 @@ if [ -f "$WALLPAPER" ]; then
     echo "Copied wallpaper config to $BACKUP_DIR/wallpaper"
 else
     echo "Warning: $WALLPAPER not found"
+fi
+
+# Copy wofi directory
+if [ -d "$WOFI_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/wofi"
+    rsync -av --delete \
+        --exclude='.git' \
+        --exclude='.github' \
+        --exclude='.gitignore' \
+        "$WOFI_CONFIG/" "$BACKUP_DIR/wofi"
+    echo "Copied wofi config to $BACKUP_DIR/wofi"
+else
+    echo "Warning: $WOFI_CONFIG not found"
 fi
 

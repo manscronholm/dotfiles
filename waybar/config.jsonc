@@ -106,8 +106,8 @@
       "special-visible-only": false,
       "format-icons": {
         "magic": " ",
-        "6": "",
-        "7": "",
+        "spotify": "",
+        "discord": "",
         "10": "󰊴 "
       }
     },
@@ -185,7 +185,7 @@
       "exec": "/usr/bin/python3 ~/.config/waybar/scripts/mediaplayer.py --player spotify",
       "return-type": "json",
       "on-click": "playerctl --player=spotify play-pause",
-      "on-click-right": "hyprctl dispatch workspace 6",
+      "on-click-right": "hyprctl dispatch togglespecialworkspace spotify",
       "on-scroll-up": "playerctl --player=spotify next",
       "on-scroll-down": "playerctl --player=spotify previous"
     },
