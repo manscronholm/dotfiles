@@ -15,6 +15,7 @@ return {
       { '<leader>z', group = '[z]Folding' },
       { '<leader>g', group = '[G]o to' },
       { '<leader>t', group = '[T]erminal' },
+      { '<leader>n', group = '[N]oice' },
     },
   },
 }

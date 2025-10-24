@@ -11,17 +11,7 @@ return {
       -- search parent dirs for a solution; great when you open from subfolders
       broad_search = true,
       -- keep false if you switch solutions often; set true to stick to one
-      lock_target = false,
-      -- prefer a .sln in the cwd if there are several
-      choose_target = function(targets)
-        local cwd = vim.loop.cwd()
-        for _, t in ipairs(targets) do
-          if t:find(cwd, 1, true) then
-            return t
-          end
-        end
-        return targets[1]
-      end,
+      lock_target = true,
     },
   },
 
@@ -61,6 +51,9 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
+          local tb = require 'telescope.builtin'
+          local bufnr = event.buf
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
           local map = function(keys, fn, desc, mode)
             vim.keymap.set(mode or 'n', keys, fn, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
@@ -75,20 +68,42 @@ return {
           map('<leader>gt', require('telescope.builtin').lsp_type_definitions, 'Goto [T]ype Definition')
           map('<leader>gb', '<C-o>', 'Go [B]ack')
           map('<leader>gf', '<C-i>', 'Go [F]orward')
+
+          -- === CodeLens (shows “N references / implementations / Run test” above symbols) ===
+          if client and client.server_capabilities.codeLensProvider then
+            local grp = vim.api.nvim_create_augroup('lsp-codelens-' .. bufnr, { clear = true })
+            vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+              group = grp,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.codelens.refresh()
+              end,
+            })
+            -- initial paint
+            vim.lsp.codelens.refresh()
+          end
         end,
-      }) -- matches your current init. :contentReference[oaicite:9]{index=9}
+      })
 
       -- Capabilities from blink.cmp
-      local capabilities = require('blink.cmp').get_lsp_capabilities() -- same as init.lua. :contentReference[oaicite:10]{index=10}
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       vim.lsp.config('roslyn', {
-        capabilities = capabilities,
         settings = {
           -- let Roslyn analyze the whole solution so “Go to …” finds cross-file symbols
           ['csharp|background_analysis'] = {
             dotnet_analyzer_diagnostics_scope = 'fullSolution',
             dotnet_compiler_diagnostics_scope = 'fullSolution',
           },
+          ['csharp|code_lens'] = {
+            dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+          },
+          ['csharp|completion'] = {
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+          },
+          ['csharp|inlay_hints'] = {},
         },
       })
       -- Servers list  '
