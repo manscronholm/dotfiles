@@ -15,7 +15,16 @@ return {
     { '<leader>x', ':Neotree toggle<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
-
+    window = {
+      mappings = {
+        ['m'] = {
+          'move',
+          config = {
+            show_path = 'relative', -- "none", "relative", "absolute"
+          },
+        },
+      },
+    },
     filesystem = {
       hijack_netrw_behavior = 'open_current',
       window = {
