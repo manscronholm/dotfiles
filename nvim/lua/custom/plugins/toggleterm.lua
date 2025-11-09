@@ -17,7 +17,12 @@ return {
     insert_mappings = false, -- we drive with our own leader maps
     persist_size = true,
     direction = 'float',
-    float_opts = { border = 'rounded' },
+    float_opts = {
+      border = 'rounded',
+      width = 120,
+      height = 30,
+      title_pos = 'center',
+    },
   },
   config = function(_, opts)
     require('toggleterm').setup(opts)
@@ -31,10 +36,7 @@ return {
     -- Lazygit / REPL “named” terminals
     local Terminal = require('toggleterm.terminal').Terminal
     local lazygit = Terminal:new { cmd = 'lazygit', dir = 'git_dir', direction = 'float', hidden = true }
-    local node = Terminal:new { cmd = 'node', hidden = true }
-    local python = Terminal:new { cmd = 'python', hidden = true }
 
-    -- Leader keys (avoids neotest's tt/tT/ts/to to prevent conflict)
     vim.keymap.set('n', '<leader>tf', '<cmd>ToggleTerm direction=float<CR>', { desc = '[T]erminal (float)' })
     vim.keymap.set('n', '<leader>th', '<cmd>ToggleTerm direction=horizontal<CR>', { desc = '[T]erminal (horizontal)' })
     vim.keymap.set('n', '<leader>tv', '<cmd>ToggleTerm direction=vertical<CR>', { desc = '[T]erminal (vertical)' })
@@ -42,12 +44,6 @@ return {
     vim.keymap.set('n', '<leader>tg', function()
       lazygit:toggle()
     end, { desc = '[T]erminal: lazy[g]it' })
-    vim.keymap.set('n', '<leader>tn', function()
-      node:toggle()
-    end, { desc = '[T]erminal: [n]ode REPL' })
-    vim.keymap.set('n', '<leader>tp', function()
-      python:toggle()
-    end, { desc = '[T]erminal: [p]ython REPL' })
 
     -- Optional: toggle last terminal from terminal-mode too
     vim.keymap.set('t', '<leader>tf', '<cmd>ToggleTerm direction=float<CR>', { desc = '[T]erminal (float)' })

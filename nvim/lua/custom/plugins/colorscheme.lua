@@ -4,7 +4,12 @@ return {
   name = 'catppuccin',
   priority = 1000,
   config = function()
-    require('catppuccin').setup { flavour = 'mocha', styles = { comments = { 'italic' } } }
+    require('catppuccin').setup {
+      auto_integrations = true,
+      flavour = 'mocha',
+      dim_inactive = { enabled = true },
+      styles = { comments = { 'italic' } },
+    }
     vim.cmd.colorscheme 'catppuccin'
   end,
 }
