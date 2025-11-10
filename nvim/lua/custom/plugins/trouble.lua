@@ -5,6 +5,6 @@ return {
   cmd = { 'Trouble' },
   opts = {},
   keys = {
-    { '<leader>qx', '<cmd>Trouble diagnostics toggle<CR>', desc = 'Diagnostics (Trouble)' },
+    { '<leader>eq', '<cmd>Trouble diagnostics toggle<CR>', desc = 'Diagnostics (Trouble)' },
   },
 }

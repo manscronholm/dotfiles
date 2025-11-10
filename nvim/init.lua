@@ -11,6 +11,15 @@ vim.g.loaded_netrwPlugin = 1
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
+-- Configure underline styles for diagnostics
+local function uc(group, sp)
+  vim.api.nvim_set_hl(0, group, { undercurl = true, sp = sp })
+end
+uc('DiagnosticUnderlineError', '#ff6b6b')
+uc('DiagnosticUnderlineWarn', '#e0af68')
+uc('DiagnosticUnderlineInfo', '#5bc0eb')
+uc('DiagnosticUnderlineHint', '#8bd5ca')
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 

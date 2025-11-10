@@ -7,9 +7,9 @@ return {
     require('Comment').setup()
     vim.keymap.set('n', '<leader>c', function()
       require('Comment.api').toggle.linewise.current()
-    end, { desc = 'Comment line' })
+    end, { desc = '[C]omment line' })
     vim.keymap.set('x', '<leader>c', function()
       require('Comment.api').toggle.linewise(vim.fn.visualmode())
-    end, { desc = 'Comment selection' })
+    end, { desc = '[C]omment selection' })
   end,
 }

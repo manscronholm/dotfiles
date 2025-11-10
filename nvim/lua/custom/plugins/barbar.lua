@@ -37,12 +37,12 @@ return {
     map('<A-.>', '<Cmd>BufferNext<CR>', 'Buffer: Next')
 
     -- Move buffers in the list (Alt+Arrow to avoid Alt-h/l clash)
-    map('<A-Left>', '<Cmd>BufferMovePrevious<CR>', 'Buffer: Move left')
-    map('<A-Right>', '<Cmd>BufferMoveNext<CR>', 'Buffer: Move right')
+    map('<A-h>', '<Cmd>BufferMovePrevious<CR>', 'Buffer: Move left')
+    map('<A-l>', '<Cmd>BufferMoveNext<CR>', 'Buffer: Move right')
 
     -- Pin / close / close others
     map('<leader>bp', '<Cmd>BufferPin<CR>', '[B]uffer: [P]in')
-    map('<leader>bc', '<Cmd>BufferClose<CR>', '[B]uffer: [C]lose')
+    map('<leader>q', '<Cmd>BufferClose<CR>', '')
     map('<leader>bo', '<Cmd>BufferCloseAllButCurrent<CR>', '[B]uffer: Close [O]thers')
 
     -- Pick buffer by letter (super handy)

@@ -18,5 +18,13 @@ return {
       end,
       desc = 'Refactorings (list)',
     },
+    {
+      '<leader>ga',
+      function()
+        require('actions-preview').code_actions()
+      end,
+      mode = { 'n', 'x' },
+      desc = '[G]oto [A]ctions',
+    },
   },
 }

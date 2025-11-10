@@ -10,7 +10,7 @@ return {
       function()
         require('flash').jump()
       end,
-      desc = 'Jump (Flash/EasyMotion-like)',
+      desc = '[J]ump',
     },
   },
 }

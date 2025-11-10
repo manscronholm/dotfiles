@@ -12,7 +12,7 @@ return {
   lazy = false,
   cmd = 'Neotree',
   keys = {
-    { '<leader>x', ':Neotree toggle<CR>', desc = 'NeoTree reveal', silent = true },
+    { '<leader>x', ':Neotree toggle<CR>', desc = '', silent = true },
   },
   opts = {
     window = {
@@ -23,6 +23,8 @@ return {
             show_path = 'relative', -- "none", "relative", "absolute"
           },
         },
+        ['f'] = 'fuzzy_finder', -- make f jump to files
+        ['F'] = 'filter_on_submit', -- keep filtering on Shift-F
       },
     },
     filesystem = {

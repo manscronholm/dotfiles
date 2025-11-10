@@ -1,35 +1,48 @@
 -- lua/custom/plugins/lsp.lua
 return {
-  { -- Lua tooling for your config/plugins
-    'folke/lazydev.nvim',
-    ft = 'lua',
-    opts = { library = { { path = '${3rd}/luv/library', words = { 'vim%.uv' } } } },
-  },
+  { 'folke/lazydev.nvim', ft = 'lua', opts = { library = { { path = '${3rd}/luv/library', words = { 'vim%.uv' } } } } },
+  { 'j-hui/fidget.nvim', opts = {} },
+
   {
     'seblyng/roslyn.nvim',
-    opts = {
-      -- search parent dirs for a solution; great when you open from subfolders
-      broad_search = true,
-      -- keep false if you switch solutions often; set true to stick to one
-      lock_target = true,
-    },
+    opts = { broad_search = true, lock_target = true },
+    config = function(_, opts)
+      require('roslyn').setup(opts)
+      -- Customize Roslyn with the new API (optional)
+      vim.lsp.config('roslyn', {
+        settings = {
+          ['csharp|background_analysis'] = {
+            dotnet_analyzer_diagnostics_scope = 'fullSolution',
+            dotnet_compiler_diagnostics_scope = 'fullSolution',
+          },
+          ['csharp|code_lens'] = {
+            dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+          },
+          ['csharp|completion'] = {
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+          },
+        },
+      })
+    end,
   },
 
-  { -- Main LSP + Mason + Fidget, with blink.cmp capabilities
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
-      { 'williamboman/mason.nvim', opts = { registries = { 'github:mason-org/mason-registry', 'github:Crashdummyy/mason-registry' } } },
+      'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
-      'saghen/blink.cmp', -- for capabilities
+      'saghen/blink.cmp',
+      'tris203/rzls.nvim',
     },
     config = function()
-      -- Diagnostics UI
+      -- Diagnostics UI (kept from your setup)
       vim.diagnostic.config {
         severity_sort = true,
         float = { border = 'rounded', source = 'if_many' },
-        underline = { severity = vim.diagnostic.severity.ERROR },
+        underline = true,
         signs = vim.g.have_nerd_font and {
           text = {
             [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -45,94 +58,70 @@ return {
             return d.message
           end,
         },
-      } -- mirrors your current setup. :contentReference[oaicite:8]{index=8}
+      }
 
-      -- Per-buffer LSP keymaps on attach (your gr* family)
+      -- One place to bind your “goto/refs/…” keys for all languages
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-        callback = function(event)
+        group = vim.api.nvim_create_augroup('user-lsp-attach', { clear = true }),
+        callback = function(ev)
+          local bufnr = ev.buf
           local tb = require 'telescope.builtin'
-          local bufnr = event.buf
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          local map = function(keys, fn, desc, mode)
-            vim.keymap.set(mode or 'n', keys, fn, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          local function map(lhs, rhs, desc, mode)
+            vim.keymap.set(mode or 'n', lhs, rhs, { buffer = bufnr, desc = 'LSP: ' .. desc })
           end
-          map('<C-.>', vim.lsp.buf.code_action, 'Code Action', { 'n', 'x' })
-          map('<leader>gn', vim.lsp.buf.rename, 'Re[n]ame')
-          map('<leader>gr', require('telescope.builtin').lsp_references, 'Goto [R]eferences')
-          map('<leader>gi', require('telescope.builtin').lsp_implementations, 'Goto [I]mplementation')
-          map('<leader>gd', require('telescope.builtin').lsp_definitions, 'Goto [d]efinition')
-          map('<leader>gD', vim.lsp.buf.declaration, 'Goto [D]eclaration')
-          map('<leader>gs', require('telescope.builtin').lsp_document_symbols, 'Open Document [S]ymbols')
-          map('<leader>gw', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Open [W]orkspace Symbols')
-          map('<leader>gt', require('telescope.builtin').lsp_type_definitions, 'Goto [T]ype Definition')
+
+          -- Rider-ish nav keys
+          map('<leader>gd', tb.lsp_definitions, 'Goto [d]efinition')
+          map('<leader>gi', tb.lsp_implementations, 'Goto [I]mplementation')
+          map('<leader>gr', tb.lsp_references, 'Goto [R]eferences')
+          map('<leader>gt', tb.lsp_type_definitions, 'Goto [T]ype Definition')
+          map('<leader>gs', tb.lsp_document_symbols, 'Document [S]ymbols')
+          map('<leader>gw', tb.lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
           map('<leader>gb', '<C-o>', 'Go [B]ack')
           map('<leader>gf', '<C-i>', 'Go [F]orward')
 
-          -- === CodeLens (shows “N references / implementations / Run test” above symbols) ===
+          -- Keep your codelens refresh logic
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
           if client and client.server_capabilities.codeLensProvider then
             local grp = vim.api.nvim_create_augroup('lsp-codelens-' .. bufnr, { clear = true })
             vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
               group = grp,
               buffer = bufnr,
-              callback = function()
-                vim.lsp.codelens.refresh()
-              end,
+              callback = vim.lsp.codelens.refresh,
             })
-            -- initial paint
             vim.lsp.codelens.refresh()
           end
         end,
       })
 
-      -- Capabilities from blink.cmp
+      -- Modern capabilities from blink.cmp
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      vim.lsp.config('roslyn', {
-        settings = {
-          -- let Roslyn analyze the whole solution so “Go to …” finds cross-file symbols
-          ['csharp|background_analysis'] = {
-            dotnet_analyzer_diagnostics_scope = 'fullSolution',
-            dotnet_compiler_diagnostics_scope = 'fullSolution',
-          },
-          ['csharp|code_lens'] = {
-            dotnet_enable_references_code_lens = true,
-            dotnet_enable_tests_code_lens = true,
-          },
-          ['csharp|completion'] = {
-            dotnet_show_completion_items_from_unimported_namespaces = true,
-            dotnet_show_name_completion_suggestions = true,
-          },
-          ['csharp|inlay_hints'] = {},
-        },
-      })
-      -- Servers list  '
+      -- Servers you want enabled (no require('lspconfig') calls anywhere)
       local servers = {
-        rzls = {},
-        azure_pipelines_ls = {},
         terraformls = {},
+        azure_pipelines_ls = {}, -- Azure Pipelines YAML
+        bicep = {}, -- Bicep
         html = {},
         yamlls = {},
         jsonls = {},
         lua_ls = { settings = { Lua = { completion = { callSnippet = 'Replace' } } } },
-      } -- :contentReference[oaicite:11]{index=11}
+        rzls = {},
+      }
 
-      -- Ensure tools installed via mason-tool-installer
-      local ensure = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure, { 'stylua' })
-      require('mason-tool-installer').setup { ensure_installed = ensure }
+      for name, cfg in pairs(servers) do
+        -- 1) customize/extend the server config
+        vim.lsp.config(
+          name,
+          vim.tbl_deep_extend('force', {
+            on_attach = on_attach,
+            capabilities = capabilities,
+          }, cfg)
+        )
 
-      require('mason-lspconfig').setup {
-        ensure_installed = {},
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      } -- mirrors your handler logic. :contentReference[oaicite:12]{index=12}
+        -- 2) enable it for its filetypes
+        vim.lsp.enable(name)
+      end
     end,
   },
 }

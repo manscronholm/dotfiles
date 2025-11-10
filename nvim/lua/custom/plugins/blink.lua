@@ -36,20 +36,17 @@ return {
           preselect = function()
             return not require('blink.cmp').snippet_active { direction = 1 }
           end,
-          -- auto_insert can stay true; preselect() above gates it during snippets
           auto_insert = true,
         },
       },
-      -- (Optional alternative): instead of the preselect() trick above,
-      -- you can disable showing the menu inside snippets:
-      -- trigger = { show_in_snippet = false },
     },
-
-    -- keep your other blink settings as-is…
     appearance = { nerd_font_variant = 'mono' },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
-      providers = { lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 } },
+      default = { 'lsp', 'path', 'snippets', 'lazydev', 'copilot' },
+      providers = {
+        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        copilot = { module = 'blink-copilot', name = 'copilot', score_offset = 100, async = true },
+      },
     },
     snippets = { preset = 'luasnip' },
     signature = { enabled = true },

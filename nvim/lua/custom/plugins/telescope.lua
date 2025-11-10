@@ -32,10 +32,9 @@ return {
     vim.keymap.set('n', '<leader>sd', b.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', b.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', b.oldfiles, { desc = '[S]earch Recent Files (.)' })
-    vim.keymap.set('n', '<leader><leader>', b.buffers, { desc = '[ ] Find existing buffers' }) -- keep this behavior
-    vim.keymap.set('n', '<leader>/', function()
+    vim.keymap.set('n', '<leader><leader>', function()
       b.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown { winblend = 10, previewer = false })
-    end, { desc = '[/] Fuzzy search in buffer' })
+    end, { desc = 'Fuzzy search in buffer' })
     vim.keymap.set('n', '<leader>s/', function()
       b.live_grep { grep_open_files = true, prompt_title = 'Live Grep in Open Files' }
     end, { desc = '[S]earch [/] in Open Files' })

@@ -65,11 +65,6 @@ return {
     -- route vim.notify through nvim-notify
     vim.notify = require 'notify'
 
-    -- Quick Lua prompt (shows in Noice’s popup)
-    vim.keymap.set('n', '<leader>L', function()
-      vim.api.nvim_feedkeys(':lua ', 'n', false)
-    end, { desc = 'Lua: command-line prompt' })
-
     -- Noice helpers
     vim.keymap.set('n', '<leader>nl', '<Cmd>Noice last<CR>', { desc = '[N]oice: [l]ast message' })
     vim.keymap.set('n', '<leader>nh', '<Cmd>Noice history<CR>', { desc = '[N]oice: [h]istory' })

@@ -39,10 +39,6 @@ return {
       -- Add more adapters here as needed
       ensure_installed = {
         'netcoredbg', -- C# / .NET
-        -- 'python',    -- debugpy
-        -- 'js',        -- vscode-js-debug
-        -- 'delve',     -- Go
-        -- 'codelldb',  -- C/C++/Rust
       },
       automatic_installation = true,
       handlers = {
