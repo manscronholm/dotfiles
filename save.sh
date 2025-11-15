@@ -10,6 +10,7 @@ HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
 HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
 WOFI_CONFIG="$HOME/.config/wofi"
 SWAYNC_CONFIG="$HOME/.config/swaync"
+SUPERFILE_CONFIG="$HOME/.config/superfile"
 
 WALLPAPER="$HOME/.config/hypr/wallpaper/wallpaper.jpg"
 
@@ -126,4 +127,12 @@ else
     echo "Warning: $SWAYNC_CONFIG not found"
 fi
 
+# Copy hyprpaper config
+if [ -f "$SUPERFILE_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/superfile"
+    cp "$SUPERFILE_CONFIG" "$BACKUP_DIR/superfile"
+    echo "Copied superfile config to $BACKUP_DIR/superfile"
+else
+    echo "Warning: $SUPERFILE_CONFIG not found"
+fi
 
