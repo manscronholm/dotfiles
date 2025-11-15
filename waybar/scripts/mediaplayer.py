@@ -13,6 +13,8 @@ import os
 from typing import List
 
 logger = logging.getLogger(__name__)
+PLAY_ICON = "▶"   # when paused/stopped
+PAUSE_ICON = "⏸"  # when playing
 
 def signal_handler(sig, frame):
     logger.info("Received signal to stop, exiting")
@@ -20,7 +22,6 @@ def signal_handler(sig, frame):
     sys.stdout.flush()
     # loop.quit()
     sys.exit(0)
-
 
 class PlayerManager:
     def __init__(self, selected_player=None, excluded_player=[]):
@@ -127,7 +128,12 @@ class PlayerManager:
         # only print output if no other player is playing
         current_playing = self.get_first_playing_player()
         if current_playing is None or current_playing.props.player_name == player.props.player_name:
-            self.write_output(track_info, player)
+            if current_playing and current_playing.props.status == "Playing":
+                icon = PAUSE_ICON
+            else:
+                icon = PLAY_ICON
+            display_text = f"{icon} - {track_info}"
+            self.write_output(display_text, player)
         else:
             logger.debug(f"Other player {current_playing.props.player_name} is playing, skipping")
 

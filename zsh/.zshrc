@@ -36,5 +36,6 @@ fi
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cd..="cd .."
+alias syncnvim='rsync -avh --delete ~/.config/nvim/ ~/Repositories/dotfiles/nvim/'
 
 export PATH=$PATH:/home/antabuz/.spicetify

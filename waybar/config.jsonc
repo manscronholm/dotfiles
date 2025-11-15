@@ -4,11 +4,9 @@
     "layer": "top",
     "position": "top",
     "name": "main",
-
     "margin-top": 0,
     "margin-left": 12,
     "margin-right": 12,
-
     "modules-left": [
       "group/tray",
       "custom/spacer3",
@@ -18,30 +16,25 @@
       "custom/spacer3",
       "hyprland/window"
     ],
-
-    "modules-center":[
+    "modules-center": [
       "custom/spacer3",
       "custom/spacer2",
       "custom/spotify",
       "custom/spacer1"
     ],
-
     "modules-right": [
       "custom/spacer1",
-      "temperature",
+      "custom/weather",
       "custom/spacer1",
       "pulseaudio#input",
       "pulseaudio#output",
       "custom/spacer1",
-      "hyprland/language",
-      "backlight",
-      "custom/battery",
+      "memory",
       "custom/spacer1",
       "clock",
       "custom/spacer1",
       "custom/power"
     ],
-
     // Modules
     "group/tray": {
       "orientation": "horizontal",
@@ -50,19 +43,14 @@
         "transition-left-to-right": "true",
         "children-class": "drawer-child"
       },
-      "modules": ["custom/trayicon", "tray"]
+      "modules": [
+        "custom/trayicon",
+        "tray"
+      ]
     },
-
-    "backlight": {
-      "device": "intel_backlight",
-      "format": "{icon} {percent}%",
-      "format-icons": ["󱩎", "󱩑", "󱩓", "󱩕", "󰛨"],
-      "scroll-step": 5
-    },
-
     "clock": {
       "interval": 1,
-      "format": "{:%H:%M}",
+      "format": "{:%H:%M %b %d}",
       "tooltip-format": "{:%d.%m.%Y   Week %W}\n\n<tt><small>{calendar}</small></tt>",
       "calendar": {
         "mode": "month",
@@ -78,16 +66,6 @@
         }
       },
     },
-
-    "hyprland/language": {
-      "format": "{}",
-      "format-se": "SWE",
-      "format-us": "US",
-      "min-length": 7,
-      "tooltip": false,
-      "class": "language"
-    },
-
     "hyprland/window": {
       "format": "{title}",
       "max-length": 48,
@@ -96,7 +74,6 @@
       "icon-size": 18,
       "tooltip": true
     },
-
     "hyprland/workspaces": {
       "disable-scroll-wraparound": true,
       "smooth-scrolling-threshold": 4,
@@ -106,12 +83,19 @@
       "special-visible-only": false,
       "format-icons": {
         "magic": " ",
-        "spotify": "",
-        "discord": "",
+        "spotify": " ",
+        "discord": " ",
         "10": "󰊴 "
+      },
+    },
+    "memory": {
+      "interval": 3,
+      "format": "{used:0.1f}G/{total:0.1f}G",
+      "tooltip-format": "Used: {used:0.1f}G/{total:0.1f}G. Swap: {swapUsed:0.1f}G/{swapTotal:0.1f}G",
+      "states": {
+        "critical": 90
       }
     },
-
     "pulseaudio#output": {
       "format": "{icon} {volume}%",
       "format-bluetooth": "{icon} {volume}%",
@@ -123,13 +107,14 @@
         "phone": "",
         "portable": "",
         "car": "",
-        "default": [""]
+        "default": [
+          ""
+        ]
       },
       "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
       "tooltip": true,
       "scroll-step": 5
     },
-
     "pulseaudio#input": {
       "format": "{icon} {format_source}%",
       "format-source": "{volume}",
@@ -141,43 +126,42 @@
       "on-click": "pwvucontrol",
       "tooltip-format": "{source_desc}"
     },
-
     "temperature": {
       "critical-threshold": 90,
       "interval": 4,
       "format": "{icon} {temperatureC}°",
-      "format-icons": ["", "", "", "", ""],
+      "format-icons": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
       "tooltip": false
     },
-
     "tray": {
       "icon-size": 24,
       "spacing": 8
     },
-
     "custom/spacer1": {
       "format": " \\\\ ",
       "tooltip": false
     },
-
     "custom/spacer2": {
       "format": " ",
       "tooltip": false
     },
-
     "custom/spacer3": {
       "format": " // ",
       "tooltip": false
     },
-
     "custom/trayicon": {
       "format": "",
       "tooltip": false,
       "on-click": ""
     },
-
     "custom/power": {
-      "format": "",
+      "format": " ",
       "on-click": "~/.config/waybar/scripts/power_menu.sh",
       "tooltip": "Power Menu"
     },
@@ -189,5 +173,12 @@
       "on-scroll-up": "playerctl --player=spotify next",
       "on-scroll-down": "playerctl --player=spotify previous"
     },
+    "custom/weather": {
+      "interval": 600,
+      "exec": "~/.config/waybar/scripts/wittr.sh ödeborg",
+      "return-type": "json",
+      "format": "{}",
+      "tooltip": true
+    }
   }
 ]
