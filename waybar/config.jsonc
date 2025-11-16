@@ -70,9 +70,7 @@
       "format": "{title}",
       "max-length": 48,
       "tooltip": false,
-      "icon": true,
-      "icon-size": 18,
-      "tooltip": true
+      "icon-size": 18
     },
     "hyprland/workspaces": {
       "disable-scroll-wraparound": true,
@@ -161,7 +159,7 @@
       "on-click": ""
     },
     "custom/power": {
-      "format": " ",
+      "format": "  ",
       "on-click": "~/.config/waybar/scripts/power_menu.sh",
       "tooltip": "Power Menu"
     },

@@ -3,6 +3,8 @@
 */
 
 /* Define colors */ /* {{{ */
+@define-color lavender    #b4befe;
+@define-color border      #b4befe;
 @define-color background  rgba(21, 21, 32, 0.75);
 @define-color warning     #f38ba8;
 @define-color caution     #45475a;
@@ -17,7 +19,7 @@
 @define-color process     #89b4fa;
 /* }}} */
 
-/* Reset all styles */ /* {{{ */
+/* Reset aall styles */ /* {{{ */
 * {
   border: none;
   border-radius: 0;
@@ -133,9 +135,18 @@
 /*     WORKSPACES (UPDATED)    */
 /* --------------------------- */
 
-#waybar.main #workspaces {
-  margin-left: 6px;
-  margin-right: 6px;
+#waybar.main .modules-left,
+#waybar.main .modules-center,
+#waybar.main .modules-right {
+  background: alpha(@background, 0.82);
+  border: 1px solid @border;
+  border-radius: 12px;
+  padding: 0px 5px;
+  margin: 5px 10px;
+}
+
+#waybar.main .modules-right {
+  padding-right: 12px;
 }
 
 #waybar.main #workspaces button {
@@ -244,4 +255,3 @@ tooltip {
   background: rgba(0, 0, 0, 0);
 }
 /* }}} */
-

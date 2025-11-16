@@ -8,6 +8,10 @@ require 'health'
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- disable folding
+vim.o.foldenable = false
+vim.o.foldmethod = 'manual'
+
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
 
