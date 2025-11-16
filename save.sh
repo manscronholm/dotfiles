@@ -127,8 +127,8 @@ else
     echo "Warning: $SWAYNC_CONFIG not found"
 fi
 
-# Copy hyprpaper config
-if [ -f "$SUPERFILE_CONFIG" ]; then
+# Copy superfile config
+if [ -d "$SUPERFILE_CONFIG" ]; then
     mkdir -p "$BACKUP_DIR/superfile"
     cp "$SUPERFILE_CONFIG" "$BACKUP_DIR/superfile"
     echo "Copied superfile config to $BACKUP_DIR/superfile"
