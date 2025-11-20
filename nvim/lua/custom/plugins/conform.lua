@@ -1,16 +1,16 @@
 -- lua/custom/plugins/conform.lua
 -- Formatting
 return {
-  'stevearc/conform.nvim',
-  event = { 'BufWritePre' },
-  cmd = { 'ConformInfo' },
+  "stevearc/conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
   keys = {
     {
-      '<leader>f',
+      "<leader>f",
       function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
+        require("conform").format({ async = true, lsp_format = "fallback" })
       end,
-      desc = '[F]ormat buffer',
+      desc = "[F]ormat buffer",
     },
   },
   opts = {
@@ -20,8 +20,8 @@ return {
       if disable[vim.bo[bufnr].filetype] then
         return nil
       end
-      return { timeout_ms = 500, lsp_format = 'fallback' }
+      return { timeout_ms = 500, lsp_format = "fallback" }
     end,
-    formatters_by_ft = { lua = { 'stylua' } },
+    formatters_by_ft = { lua = { "stylua", "jq", "csharpier" } },
   },
 }

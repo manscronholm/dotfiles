@@ -1,33 +1,25 @@
 #/bin/bash
 
 # Define source paths
-ZSHRC="$HOME/.zshrc"
+STARSHIP_CONFIG="$HOME/.config/starship.toml"
 NVIM_CONFIG="$HOME/.config/nvim"
-KITTY_CONFIG="$HOME/.config/kitty/kitty.conf"
+ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
 LAZYGIT_CONFIG="$HOME/.config/lazygit/config.yml"
 WAYBAR_CONFIG="$HOME/.config/waybar"
-HYPRLAND_CONFIG="$HOME/.config/hypr/hyprland.conf"
-HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
-WOFI_CONFIG="$HOME/.config/wofi"
-SWAYNC_CONFIG="$HOME/.config/swaync"
-SUPERFILE_CONFIG="$HOME/.config/superfile"
-
-WALLPAPER="$HOME/.config/hypr/wallpaper/wallpaper.jpg"
-
+HYPR_CONFIG="$HOME/.config/hypr"
 
 # Define backup directory
-BACKUP_DIR="/home/antabuz/Repositories/dotfiles"
+BACKUP_DIR="/home/antabuz/repositories/dotfiles"
 
 # Ensure base backup directory exists
 mkdir -p "$BACKUP_DIR"
-
-# Copy .zshrc
-if [ -f "$ZSHRC" ]; then
-    mkdir -p "$BACKUP_DIR/zsh"
-    cp "$ZSHRC" "$BACKUP_DIR/zsh"
-    echo "Copied .zshrc to $BACKUP_DIR/zsh"
+# Copy starship.toml
+if [ -f "$STARSHIP_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/starship"
+    cp "$STARSHIP_CONFIG" "$BACKUP_DIR/starship"
+    echo "Copied starship.toml to $BACKUP_DIR/starship"
 else
-    echo "Warning: $ZSHRC not found"
+    echo "Warning: $STARSHIP_CONFIG not found"
 fi
 
 # Copy nvim directory
@@ -43,13 +35,13 @@ else
     echo "Warning: $NVIM_CONFIG not found"
 fi
 
-# Copy kitty.conf
-if [ -f "$KITTY_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/kitty"
-    cp "$KITTY_CONFIG" "$BACKUP_DIR/kitty"
-    echo "Copied kitty.conf to $BACKUP_DIR/kitty"
+# Copy alacritty.toml
+if [ -f "$ALACRITTY_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/alacritty"
+    cp "$ALACRITTY_CONFIG" "$BACKUP_DIR/alacritty"
+    echo "Copied alacritty.toml to $BACKUP_DIR/alacritty"
 else
-    echo "Warning: $KITTY_CONFIG not found"
+    echo "Warning: $ALACRITTY_CONFIG not found"
 fi
 
 # Copy lazygit config
@@ -74,65 +66,11 @@ else
     echo "Warning: $WAYBAR_CONFIG not found"
 fi
 
-# Copy hyprland config
-if [ -f "$HYPRLAND_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/hyprland"
-    cp "$HYPRLAND_CONFIG" "$BACKUP_DIR/hyprland"
-    echo "Copied hyprland config to $BACKUP_DIR/hyprland"
+# Copy hypr config
+if [ -f "$HYPR_CONFIG" ]; then
+    mkdir -p "$BACKUP_DIR/hypr"
+    cp "$HYPR_CONFIG" "$BACKUP_DIR/hypr"
+    echo "Copied hyprland config to $BACKUP_DIR/hypr"
 else
-    echo "Warning: $HYPRLAND_CONFIG not found"
+    echo "Warning: $HYPR_CONFIG not found"
 fi
-
-# Copy hyprpaper config
-if [ -f "$HYPRPAPER_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/hyprpaper"
-    cp "$HYPRPAPER_CONFIG" "$BACKUP_DIR/hyprpaper"
-    echo "Copied hyprpaper config to $BACKUP_DIR/hyprpaper"
-else
-    echo "Warning: $HYPRPAPER_CONFIG not found"
-fi
-
-# Copy wallpaper config
-if [ -f "$WALLPAPER" ]; then
-    mkdir -p "$BACKUP_DIR/wallpaper"
-    cp "$WALLPAPER" "$BACKUP_DIR/wallpaper"
-    echo "Copied wallpaper config to $BACKUP_DIR/wallpaper"
-else
-    echo "Warning: $WALLPAPER not found"
-fi
-
-# Copy wofi directory
-if [ -d "$WOFI_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/wofi"
-    rsync -av --delete \
-        --exclude='.git' \
-        --exclude='.github' \
-        --exclude='.gitignore' \
-        "$WOFI_CONFIG/" "$BACKUP_DIR/wofi"
-    echo "Copied wofi config to $BACKUP_DIR/wofi"
-else
-    echo "Warning: $WOFI_CONFIG not found"
-fi
-
-# Copy swaync directory
-if [ -d "$SWAYNC_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/swaync"
-    rsync -av --delete \
-        --exclude='.git' \
-        --exclude='.github' \
-        --exclude='.gitignore' \
-        "$SWAYNC_CONFIG/" "$BACKUP_DIR/swaync"
-    echo "Copied swaync config to $BACKUP_DIR/swaync"
-else
-    echo "Warning: $SWAYNC_CONFIG not found"
-fi
-
-# Copy superfile config
-if [ -d "$SUPERFILE_CONFIG" ]; then
-    mkdir -p "$BACKUP_DIR/superfile"
-    cp "$SUPERFILE_CONFIG" "$BACKUP_DIR/superfile"
-    echo "Copied superfile config to $BACKUP_DIR/superfile"
-else
-    echo "Warning: $SUPERFILE_CONFIG not found"
-fi
-

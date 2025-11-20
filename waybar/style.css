@@ -1,257 +1,111 @@
-/* vim:fileencoding=utf-8:foldmethod=marker
-*
-*/
+@import "../omarchy/current/theme/waybar.css";
 
-/* Define colors */ /* {{{ */
-@define-color lavender    #b4befe;
-@define-color border      #b4befe;
-@define-color background  rgba(21, 21, 32, 0.75);
-@define-color warning     #f38ba8;
-@define-color caution     #45475a;
-@define-color performance #f5c2e7;
-@define-color audio       #cba6f7;
-@define-color misc        #94e2d5;
-@define-color date        #a6e3a1;
-@define-color work        #b4befe;
-@define-color window      #b4befe;
-@define-color power       #b4befe;
-@define-color resize      #eba0ac;
-@define-color process     #89b4fa;
-/* }}} */
-
-/* Reset aall styles */ /* {{{ */
+  @define-color spacer  #45475a;
 * {
+  background-color: @background;
+  color: @foreground;
+
   border: none;
   border-radius: 0;
   min-height: 0;
-  margin: 0;
-  padding: 0;
-  box-shadow: none;
-  text-shadow: none;
-}
-/* }}} */
-
-/* Main bar keyframes */ /* {{{ */
-@keyframes blink-critical-text {
-  to {
-    color: @warning;
-  }
+  font-family: 'JetBrainsMono Nerd Font Mono';
+  font-size: 14px;
 }
 
-@keyframes blink-modifier-text {
-  to {
-    color: @caution;
-  }
+.modules-left {
+  margin-left: 8px;
 }
-/* }}} */
 
-/* Main bar defaults */ /* {{{ */
-#waybar.main {
-  background: transparent;
-  font-family: "JetBrains Mono Nerd Font";
+.modules-right {
+  margin-right: 8px;
+}
+
+#workspaces button {
+  all: initial;
+  padding: 0 6px;
+  margin: 0 1.5px;
+  min-width: 9px;
+}
+
+#workspaces button.empty {
+  opacity: 0.5;
+}
+
+#cpu,
+#battery,
+#pulseaudio,
+#custom-omarchy,
+#custom-screenrecording-indicator,
+#custom-update {
+  min-width: 12px;
+  margin: 0 7.5px;
+}
+
+#tray spacer{
+  margin-right: 16px;
+}
+
+#bluetooth {
+  margin-right: 17px;
+}
+
+#network {
+  margin-right: 13px;
+}
+
+#custom-expand-icon {
+  margin-right: 18px;
+}
+
+tooltip {
+  padding: 2px;
+}
+
+#custom-update {
+  font-size: 10px;
+}
+
+#clock {
+  margin-left: 8.75px;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#custom-screenrecording-indicator {
+  min-width: 12px;
+  margin-left: 8.75px;
+  font-size: 10px;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #a55555;
+}
+/* Custom slashes as spacers */ /* {{{ */
+#custom-spacer1,
+#custom-spacer2,
+#custom-spacer3 {
   font-size: 10pt;
-  font-weight: 500;
-}
-
-#waybar.main button {
-  font-family: "JetBrains Mono Nerd Font";
-  font-size: 10pt;
-  font-weight: 500;
-  transition: all 0.15s ease-in-out;
-}
-/* }}} */
-
-/* Main bar modules */ /* {{{ */
-#waybar.main #custom-weather,
-#waybar.main #custom-weather,
-#waybar.main #custom-battery,
-#waybar.main #custom-spotify,
-#waybar.main #keyboard-state,
-#waybar.main #network,
-#waybar.main #battery,
-#waybar.main #backlight,
-#waybar.main #clock,
-#waybar.main #cpu,
-#waybar.main #language,
-#waybar.main #submap,
-#waybar.main #pulseaudio,
-#waybar.main #temperature,
-#waybar.main #tray,
-#waybar.main #window,
-#waybar.main #memory
-#waybar.main #disk {
-  padding-left: 8pt;
-  padding-right: 8pt;
-  padding-bottom: 4px;
-  padding-top: 4px;
+  font-weight: bold;
+  color: @spacer;
   background: transparent;
 }
 
-#waybar.main #tray {
-  padding-right: 6pt;
-}
-
-#waybar.main #custom-weather {
-  padding-right: 3pt;
-}
-/* }}} */
-
-/* Module colors */ /* {{{ */
-#waybar.main #temperature,
-#waybar.main #pulseaudio {
-  color: @audio;
-}
-
-#waybar.main #custom-battery,
-#waybar.main #memory,
-#waybar.main #backlight,
-#waybar.main #battery {
-  color: @misc;
-}
-
-#waybar.main #custom-weather,
-#waybar.main #clock {
-  color: @date;
-}
-
-#waybar.main #window {
-  color: @window;
-  margin-top: -0px;
-}
-
-#waybar.main #custom-spotify {
-  color: @window;
-  margin-top: -0px;
-}
-
-/* Warnings */
-#waybar.main #pulseaudio.output.muted,
-#waybar.main #pulseaudio.input.source-muted {
-  color: @caution;
-}
-/* }}} */
-
-/* --------------------------- */
-/*     WORKSPACES (UPDATED)    */
-/* --------------------------- */
-
-#waybar.main .modules-left,
-#waybar.main .modules-center,
-#waybar.main .modules-right {
-  background: alpha(@background, 0.82);
-  border: 1px solid @border;
-  border-radius: 12px;
-  padding: 0px 5px;
-  margin: 5px 10px;
-}
-
-#waybar.main .modules-right {
-  padding-right: 12px;
-}
-
-#waybar.main #workspaces button {
-  color: @caution;
-  background: @background;
-  border: 1.5px solid @caution;
-  border-radius: 10px;
-  padding: 3px 10px;
-  margin: 6px 4px;
-  transition: all 0.20s ease-in-out;
-  opacity: 0.75;
-}
-
-/* Hover */
-#waybar.main #workspaces button:hover {
-  opacity: 1;
-  color: @window;
-  border-color: @window;
-}
-
-/* Focused workspace (monitor active) */
-#waybar.main #workspaces button.active {
-  background: @window;
-  color: black;
-  border-color: @window;
-  opacity: 1;
-}
-
-/* Workspace has windows but not focused */
-#waybar.main #workspaces button.visible {
-  background: alpha(@window, 0.15);
-  border-color: @window;
-  color: @window;
-  opacity: 1;
-}
-
-/* Urgent workspace */
-#waybar.main #workspaces button.urgent {
-  background: @warning;
-  border-color: @warning;
-  color: black;
-  opacity: 1;
-}
-
-/* Special workspace (Hyprland scratchpad) */
-#waybar.main #workspaces button.special {
+/* special workspace (hyprland scratchpad) */
+#workspaces button.special {
   background: @performance;
   border-color: @performance;
   color: black;
   opacity: 1;
 }
 
-/* Special workspace active animation */
-#waybar.main #workspaces button.special.active {
+/* special workspace active animation */
+#workspaces button.special.active {
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-name: blink-modifier-text;
   animation-duration: 1s;
   animation-timing-function: steps(15);
-}
-/* }}} */
-
-/* Custom slashes as spacers */ /* {{{ */
-#waybar.main #custom-spacer1,
-#waybar.main #custom-spacer2,
-#waybar.main #custom-spacer3 {
-  font-size: 10pt;
-  font-weight: bold;
-  color: @caution;
-  background: transparent;
-}
-/* }}} */
-
-/* Custom tray icon */ /* {{{ */
-#waybar.main #custom-trayicon {
-  font-size: 11pt;
-  font-weight: bold;
-  font-style: italic;
-  color: @process;
-  background: transparent;
-  padding-right: 6pt;
-  padding-left: 2pt;
-}
-/* }}} */
-
-/* Tooltip */ /* {{{ */
-tooltip {
-  background: @background;
-  border: 3px solid @caution;
-  border-radius: 8px;
-  font-weight: 500;
-  font-family: "JetBrains Mono Nerd Font";
-}
-
-#waybar.main #tray menu {
-  background: @background;
-  border: 3px solid @caution;
-  border-radius: 8px;
-}
-/* }}} */
-
-/* Indicator bar battery module */ /* {{{ */
-#waybar.indicator {
-  font-size: 27px;
-  color: rgba(0, 0, 0, 0);
-  background: rgba(0, 0, 0, 0);
 }
 /* }}} */
