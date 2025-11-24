@@ -1,4 +1,3 @@
--- lua/custom/plugins/blink.lua
 -- Completion
 return {
   "saghen/blink.cmp",
