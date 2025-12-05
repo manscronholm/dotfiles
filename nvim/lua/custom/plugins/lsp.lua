@@ -14,7 +14,7 @@ return {
       vim.lsp.config("roslyn", {
         settings = {
           ["csharp|background_analysis"] = {
-            dotnet_analyzer_diagnostics_scope = "fullSolution",
+            dotnet_analyzer_diagnostics_scope = "openFiles",
             dotnet_compiler_diagnostics_scope = "fullSolution",
           },
           ["csharp|code_lens"] = {
@@ -45,6 +45,7 @@ return {
         severity_sort = true,
         float = { border = "rounded", source = "if_many" },
         underline = true,
+        update_in_insert = false,
         signs = vim.g.have_nerd_font and {
           text = {
             [vim.diagnostic.severity.ERROR] = "󰅚 ",
