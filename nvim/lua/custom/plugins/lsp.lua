@@ -72,7 +72,7 @@ return {
             vim.keymap.set(mode or "n", lhs, rhs, { buffer = bufnr, desc = "LSP: " .. desc })
           end
 
-          -- Rider-ish nav keys
+          -- Keymaps
           map("<leader>gd", tb.lsp_definitions, "Goto [d]efinition")
           map("<leader>gi", tb.lsp_implementations, "Goto [I]mplementation")
           map("<leader>gr", tb.lsp_references, "Goto [R]eferences")
@@ -81,6 +81,7 @@ return {
           map("<leader>gw", tb.lsp_dynamic_workspace_symbols, "[W]orkspace Symbols")
           map("<leader>gb", "<C-o>", "Go [B]ack")
           map("<leader>gf", "<C-i>", "Go [F]orward")
+          map("<leader>.", vim.lsp.buf.code_action, "Code action", { "n", "v" })
 
           -- Keep your codelens refresh logic
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
