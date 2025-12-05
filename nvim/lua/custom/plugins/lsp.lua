@@ -5,8 +5,6 @@ return {
     ft = "lua",
     opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
   },
-  { "j-hui/fidget.nvim", opts = {} },
-
   {
     "seblyng/roslyn.nvim",
     opts = { broad_search = true, lock_target = true },
@@ -98,14 +96,12 @@ return {
         end,
       })
 
-      -- Modern capabilities from blink.cmp
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-      -- Servers you want enabled (no require('lspconfig') calls anywhere)
       local servers = {
         terraformls = {},
-        azure_pipelines_ls = {}, -- Azure Pipelines YAML
-        bicep = {}, -- Bicep
+        azure_pipelines_ls = {},
+        bicep = {},
         bash = {},
         html = {},
         yamlls = {},
@@ -119,7 +115,6 @@ return {
         vim.lsp.config(
           name,
           vim.tbl_deep_extend("force", {
-            on_attach = on_attach,
             capabilities = capabilities,
           }, cfg)
         )
