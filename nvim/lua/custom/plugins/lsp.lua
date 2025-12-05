@@ -87,7 +87,7 @@ return {
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
           if client and client.server_capabilities.codeLensProvider then
             local grp = vim.api.nvim_create_augroup("lsp-codelens-" .. bufnr, { clear = true })
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+            vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
               group = grp,
               buffer = bufnr,
               callback = vim.lsp.codelens.refresh,
