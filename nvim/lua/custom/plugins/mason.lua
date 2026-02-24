@@ -13,17 +13,22 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     opts = {
       ensure_installed = {
+        -- LSP servers:
         'terraform-ls',
         'azure-pipelines-language-server',
         'bicep-lsp',
         'powershell-editor-services',
+        'html-lsp',
+        'json-lsp',
+        'lemminx',
+        'bash-language-server',
+        'rust-analyzer',
         -- Formatters/linters:
         'stylua',
         'csharpier',
-        'bicep',
+        'prettier',
+        'shfmt',
         'yamlfmt',
-        'terraform',
-        'jq',
       },
       auto_update = false,
       run_on_start = true,

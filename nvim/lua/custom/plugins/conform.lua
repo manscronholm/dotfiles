@@ -22,6 +22,18 @@ return {
       end
       return { timeout_ms = 500, lsp_format = "fallback" }
     end,
-    formatters_by_ft = { lua = { "stylua", "jq", "csharpier" } },
+    formatters_by_ft = {
+      lua = { "stylua" },
+      cs = { "csharpier" },
+      json = { "prettier" },
+      html = { "prettier" },
+      xml = { "prettier" },
+      terraform = { "terraform_fmt" },
+      hcl = { "terraform_fmt" },
+      sh = { "shfmt" },
+      bash = { "shfmt" },
+      rust = { "rustfmt" },
+      bicep = { "bicep" },
+    },
   },
 }

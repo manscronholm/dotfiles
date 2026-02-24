@@ -104,12 +104,15 @@ return {
         terraformls = {},
         azure_pipelines_ls = {},
         bicep = {},
-        bash = {},
+        bashls = {},
         html = {},
         yamlls = {},
         jsonls = {},
         lua_ls = { settings = { Lua = { completion = { callSnippet = "Replace" } } } },
         rzls = {},
+        lemminx = {},
+        powershell_es = {},
+        rust_analyzer = {},
       }
 
       for name, cfg in pairs(servers) do
