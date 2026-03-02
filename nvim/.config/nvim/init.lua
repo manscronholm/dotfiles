@@ -5,7 +5,13 @@ vim.g.maplocalleader = " "
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-require("omarchy")
+
+-- Platform detection: load Omarchy theme system on Linux, standalone Catppuccin on macOS
+local is_linux = vim.fn.has("linux") == 1
+
+if is_linux then
+  require("omarchy")
+end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -21,9 +27,10 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   "tpope/vim-sleuth",
   { import = "custom.plugins" },
-  { import = "omarchy.theme" },
-  { import = "omarchy.shim" },
-  { import = "omarchy.omarchy-theme-hotreload" },
+  { import = "colorscheme", cond = not is_linux },
+  { import = "omarchy.theme", cond = is_linux },
+  { import = "omarchy.shim", cond = is_linux },
+  { import = "omarchy.omarchy-theme-hotreload", cond = is_linux },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

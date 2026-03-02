@@ -40,10 +40,8 @@ return {
       },
     },
 
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-
-      -- Your custom remaps
+    init = function()
+      -- Custom remaps
       vim.keymap.set("n", "åå", "]m", { remap = true, desc = "Method down" })
       vim.keymap.set("n", "ää", "[m", { remap = true, desc = "Method up" })
     end,

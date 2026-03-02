@@ -1,1 +1,0 @@
-/home/antabuz/.config/omarchy/current/theme/neovim.lua

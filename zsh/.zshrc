@@ -43,7 +43,8 @@ alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
 alias cd..="cd .."
 alias syncnvim='rsync -avh --delete ~/.config/nvim/ ~/repositories/dotfiles/nvim/'
+alias cd="z"
 
 # Starship prompt (safe to load last)
 eval "$(starship init zsh)"
-
+eval "$(zoxide init zsh)"
