@@ -59,14 +59,22 @@ for pkg in "${BREW_PACKAGES[@]}"; do
   fi
 done
 
-# --- Nerd Font ---
-info "Installing JetBrainsMono Nerd Font..."
-if brew list --cask font-jetbrains-mono-nerd-font &>/dev/null; then
-  ok "JetBrainsMono Nerd Font already installed"
-else
-  brew install --cask font-jetbrains-mono-nerd-font
-  ok "JetBrainsMono Nerd Font installed"
-fi
+# --- Casks ---
+BREW_CASKS=(
+  font-jetbrains-mono-nerd-font
+  nikitabobko/tap/aerospace
+)
+
+info "Installing casks..."
+for cask in "${BREW_CASKS[@]}"; do
+  if brew list --cask "$cask" &>/dev/null 2>&1; then
+    ok "$cask already installed"
+  else
+    info "Installing $cask..."
+    brew install --cask "$cask"
+    ok "$cask installed"
+  fi
+done
 
 # --- Oh My Zsh ---
 if [[ -d "$HOME/.oh-my-zsh" ]]; then
@@ -99,7 +107,7 @@ else
 fi
 
 # --- Backup existing configs before stowing ---
-STOW_PACKAGES=(tmux zsh nvim starship lazygit alacritty-mac)
+STOW_PACKAGES=(tmux zsh nvim starship lazygit alacritty-mac aerospace)
 
 # Target paths relative to $HOME for each stow package
 STOW_TARGETS=(
@@ -109,6 +117,7 @@ STOW_TARGETS=(
   ".config/starship"
   ".config/lazygit"
   ".config/alacritty"
+  ".aerospace.toml"
 )
 
 backup_needed=false
