@@ -31,6 +31,7 @@ The scripts are idempotent — safe to run multiple times. Existing config files
 |---|---|
 | Core | `stow`, `git`, `zsh` |
 | Terminal | `alacritty`, `tmux`, `starship` |
+| Keyboard | `karabiner-elements` (macOS) |
 | Window manager | `aerospace` (macOS) |
 | Editor | `neovim` |
 | CLI tools | `fzf`, `fd`, `ripgrep`, `zoxide`, `lazygit` |
@@ -49,7 +50,7 @@ cd ~/git/dotfiles
 **macOS:**
 
 ```bash
-stow -t ~ tmux zsh nvim starship lazygit alacritty-mac aerospace
+stow -t ~ tmux zsh nvim starship lazygit alacritty-mac aerospace karabiner
 ```
 
 **Linux:**
@@ -77,6 +78,7 @@ stow -t ~ -D <package>
 | `lazygit` | `~/.config/lazygit/` | Shared |
 | `alacritty-mac` | `~/.config/alacritty/` | macOS |
 | `aerospace` | `~/.aerospace.toml` | macOS |
+| `karabiner` | `~/.config/karabiner/` | macOS |
 | `alacritty-linux` | `~/.config/alacritty/` | Linux |
 | `hyprland` | `~/.config/hypr/` | Linux |
 | `waybar` | `~/.config/waybar/` | Linux |

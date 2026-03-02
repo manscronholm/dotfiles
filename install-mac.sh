@@ -63,6 +63,7 @@ done
 BREW_CASKS=(
   font-jetbrains-mono-nerd-font
   nikitabobko/tap/aerospace
+  karabiner-elements
 )
 
 info "Installing casks..."
@@ -107,7 +108,7 @@ else
 fi
 
 # --- Backup existing configs before stowing ---
-STOW_PACKAGES=(tmux zsh nvim starship lazygit alacritty-mac aerospace)
+STOW_PACKAGES=(tmux zsh nvim starship lazygit alacritty-mac aerospace karabiner)
 
 # Target paths relative to $HOME for each stow package
 STOW_TARGETS=(
@@ -118,6 +119,7 @@ STOW_TARGETS=(
   ".config/lazygit"
   ".config/alacritty"
   ".aerospace.toml"
+  ".config/karabiner"
 )
 
 backup_needed=false
