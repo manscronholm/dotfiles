@@ -4,8 +4,14 @@ export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
   fzf
+  vi-mode
   zsh-syntax-highlighting
 )
+
+# Vi-mode settings
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_NORMAL=1
+VI_MODE_CURSOR_INSERT=5
 
 # Disable OMZ theme (Starship will handle prompt)
 ZSH_THEME=""
