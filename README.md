@@ -49,21 +49,21 @@ cd ~/git/dotfiles
 **macOS:**
 
 ```bash
-stow tmux zsh nvim starship lazygit alacritty-mac aerospace
+stow -t ~ tmux zsh nvim starship lazygit alacritty-mac aerospace
 ```
 
 **Linux:**
 
 ```bash
-stow tmux zsh nvim starship lazygit alacritty-linux hyprland waybar
+stow -t ~ tmux zsh nvim starship lazygit alacritty-linux hyprland waybar
 ```
 
-Use `stow -n -v <package>` for a dry-run to see what symlinks would be created without making changes.
+Use `stow -t ~ -n -v <package>` for a dry-run to see what symlinks would be created without making changes.
 
 To remove a package's symlinks:
 
 ```bash
-stow -D <package>
+stow -t ~ -D <package>
 ```
 
 ## Packages
