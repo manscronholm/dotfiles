@@ -45,10 +45,8 @@ else
 fi
 
 # Aliases
-alias zshconfig="mate ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="nvim ~/.zshrc"
 alias cd..="cd .."
-alias syncnvim='rsync -avh --delete ~/.config/nvim/ ~/repositories/dotfiles/nvim/'
 alias cd="z"
 
 # Starship prompt (safe to load last)
