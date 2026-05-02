@@ -6,6 +6,8 @@ plugins=(
   fzf
   vi-mode
   zsh-syntax-highlighting
+  ssh-agent
+  kubectl
 )
 
 # Vi-mode settings

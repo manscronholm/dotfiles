@@ -107,7 +107,6 @@ STOW_TARGETS=(
   ".config/starship"
   ".config/lazygit"
   ".config/alacritty"
-  ".config/hypr"
   ".config/waybar"
 )
 
