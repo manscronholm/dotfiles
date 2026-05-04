@@ -1,11 +1,10 @@
--- lua/custom/plugins/refactoring.lua
 return {
   "ThePrimeagen/refactoring.nvim",
   dependencies = {
     "lewis6991/async.nvim",
   },
-  lazy = false, -- keep eager so the :Refactor command exists immediately
-  opts = {}, -- defaults are fine unless you want to tweak
+  lazy = false,
+  opts = {},
   keys = {
     {
       "<leader>re",
@@ -23,7 +22,7 @@ return {
       "<leader>rv",
       ":Refactor extract_var ",
       mode = "x",
-      desc = "Refactor: extract variable (name…)",
+      desc = "Refactor: extract variable",
     },
 
     {
@@ -48,7 +47,7 @@ return {
         require("refactoring").select_refactor()
       end,
       mode = { "n", "x" },
-      desc = "Refactor: select…",
+      desc = "Refactor: select",
     },
   },
 }

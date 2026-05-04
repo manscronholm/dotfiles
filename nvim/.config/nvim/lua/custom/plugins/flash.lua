@@ -1,16 +1,14 @@
--- lua/custom/plugins/flash.lua
--- EasyMotions-style jump on <leader>j
 return {
-  'folke/flash.nvim',
-  event = 'VeryLazy',
+  "folke/flash.nvim",
+  event = "VeryLazy",
   opts = {},
   keys = {
     {
-      '<leader>j',
+      "<leader>j",
       function()
-        require('flash').jump()
+        require("flash").jump()
       end,
-      desc = '[J]ump',
+      desc = "[J]ump",
     },
   },
 }
