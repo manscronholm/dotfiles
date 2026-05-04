@@ -23,6 +23,7 @@ return {
         'lemminx',
         'bash-language-server',
         'rust-analyzer',
+        'yaml-language-server',
         -- Formatters/linters:
         'stylua',
         'csharpier',

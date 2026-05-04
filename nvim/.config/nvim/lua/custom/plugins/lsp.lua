@@ -1,4 +1,3 @@
--- lua/custom/plugins/lsp.lua
 return {
   {
     "folke/lazydev.nvim",
@@ -40,6 +39,35 @@ return {
       "tris203/rzls.nvim",
     },
     config = function()
+      local function azure_pipelines_root(bufnr, on_dir)
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if bufname == "" then
+          return
+        end
+
+        local normalized = vim.fs.normalize(bufname):lower()
+        local markers = {
+          "/azure devops/",
+          "/azure-devops/",
+          "/pipelines/",
+        }
+
+        if normalized:match("/azure%-pipelines%.ya?ml$") then
+          on_dir(vim.fs.root(bufname, { ".git" }) or vim.fs.dirname(bufname))
+          return
+        end
+
+        for _, marker in ipairs(markers) do
+          local idx = normalized:find(marker, 1, true)
+          if idx then
+            local marker_dir = bufname:sub(1, idx + #marker - 2)
+            local root = vim.fs.root(bufname, { ".git" }) or marker_dir
+            on_dir(root)
+            return
+          end
+        end
+      end
+
       -- Diagnostics UI (kept from your setup)
       vim.diagnostic.config({
         severity_sort = true,
@@ -99,14 +127,54 @@ return {
       })
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
+      local azure_pipeline_schema = "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"
+      local azure_pipeline_globs = {
+        "/azure-pipeline*.y*l",
+        "**/azure-pipeline*.y*l",
+        "/*.azure*",
+        "**/azure devops/**/*.y*l",
+        "**/azure-devops/**/*.y*l",
+        "**/pipelines/**/*.y*l",
+        "Azure-Pipelines/**/*.y*l",
+        "Pipelines/*.y*l",
+      }
 
       local servers = {
         terraformls = {},
-        azure_pipelines_ls = {},
+        azure_pipelines_ls = {
+          root_dir = azure_pipelines_root,
+          init_options = {},
+          settings = {
+            yaml = {
+              schemas = {
+                [azure_pipeline_schema] = azure_pipeline_globs,
+              },
+            },
+          },
+        },
         bicep = {},
         bashls = {},
         html = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            redhat = { telemetry = { enabled = false } },
+            yaml = {
+              completion = true,
+              customTags = {
+                "!reference sequence",
+              },
+              format = { enable = true },
+              hover = true,
+              schemaStore = {
+                enable = true,
+              },
+              schemas = {
+                [azure_pipeline_schema] = azure_pipeline_globs,
+              },
+              validate = true,
+            },
+          },
+        },
         jsonls = {},
         lua_ls = { settings = { Lua = { completion = { callSnippet = "Replace" } } } },
         rzls = {},

@@ -9,7 +9,9 @@ return {
     opts = {
       ensure_installed = {
         "bash",
+        "bicep",
         "c",
+        "c_sharp",
         "diff",
         "html",
         "json",
@@ -18,8 +20,10 @@ return {
         "markdown",
         "markdown_inline",
         "query",
+        "terraform",
         "vim",
         "vimdoc",
+        "yaml",
       },
       auto_install = true,
     },
