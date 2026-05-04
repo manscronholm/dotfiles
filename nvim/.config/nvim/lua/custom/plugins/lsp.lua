@@ -179,7 +179,10 @@ return {
         lua_ls = { settings = { Lua = { completion = { callSnippet = "Replace" } } } },
         rzls = {},
         lemminx = {},
-        powershell_es = {},
+        powershell_es = {
+          bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
+          shell = "pwsh",
+        },
         rust_analyzer = {},
       }
 
