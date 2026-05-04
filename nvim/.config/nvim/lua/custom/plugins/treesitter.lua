@@ -2,6 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    main = "nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
@@ -11,6 +12,7 @@ return {
         "c",
         "diff",
         "html",
+        "json",
         "lua",
         "luadoc",
         "markdown",
@@ -20,27 +22,51 @@ return {
         "vimdoc",
       },
       auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = {
-        enable = true,
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-          },
-        },
-      },
     },
+    config = function(_, opts)
+      require("nvim-treesitter").setup(opts)
 
-    init = function()
+      local group = vim.api.nvim_create_augroup("user-treesitter", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = group,
+        pattern = {
+          "bash",
+          "bicep",
+          "c",
+          "cs",
+          "csharp",
+          "diff",
+          "html",
+          "json",
+          "jsonc",
+          "lua",
+          "markdown",
+          "query",
+          "terraform",
+          "terraform-vars",
+          "vim",
+          "yaml",
+        },
+        callback = function(args)
+          vim.treesitter.start(args.buf)
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
+      })
+
+      require("nvim-treesitter-textobjects").setup({
+        move = {
+          set_jumps = true,
+        },
+      })
+
+      local move = require("nvim-treesitter-textobjects.move")
+      vim.keymap.set({ "n", "x", "o" }, "]m", function()
+        move.goto_next_start("@function.outer", "textobjects")
+      end, { desc = "Next method start" })
+      vim.keymap.set({ "n", "x", "o" }, "[m", function()
+        move.goto_previous_start("@function.outer", "textobjects")
+      end, { desc = "Previous method start" })
+
       -- Custom remaps
       vim.keymap.set("n", "åå", "]m", { remap = true, desc = "Method down" })
       vim.keymap.set("n", "ää", "[m", { remap = true, desc = "Method up" })
