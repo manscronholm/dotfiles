@@ -91,6 +91,25 @@ return {
         },
       })
 
+      vim.api.nvim_create_user_command("LspClients", function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+        if vim.tbl_isempty(clients) then
+          vim.notify("No LSP clients attached to the current buffer", vim.log.levels.INFO)
+          return
+        end
+
+        local lines = vim.tbl_map(function(client)
+          local root = client.root_dir or "<no root>"
+          return string.format("- %s (id=%d, root=%s)", client.name, client.id, root)
+        end, clients)
+
+        vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO, { title = "LSP Clients" })
+      end, {
+        desc = "Show LSP clients for current buffer",
+      })
+
       -- One place to bind your “goto/refs/…” keys for all languages
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
