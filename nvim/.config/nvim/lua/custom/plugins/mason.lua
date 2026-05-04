@@ -39,7 +39,7 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     opts = {
       ensure_installed = {},
-      automatic_installation = false,
+      automatic_enable = false,
     },
   },
 }
