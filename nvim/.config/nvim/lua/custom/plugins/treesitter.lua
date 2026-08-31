@@ -26,9 +26,15 @@ return {
         "yaml",
       },
       auto_install = true,
+      textobjects = {
+        move = {
+          enable = true,
+          set_jumps = true,
+        },
+      },
     },
     config = function(_, opts)
-      require("nvim-treesitter").setup(opts)
+      require("nvim-treesitter.configs").setup(opts)
 
       local group = vim.api.nvim_create_augroup("user-treesitter", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {
@@ -57,23 +63,8 @@ return {
         end,
       })
 
-      require("nvim-treesitter-textobjects").setup({
-        move = {
-          set_jumps = true,
-        },
-      })
-
-      local move = require("nvim-treesitter-textobjects.move")
-      vim.keymap.set({ "n", "x", "o" }, "]m", function()
-        move.goto_next_start("@function.outer", "textobjects")
-      end, { desc = "Next method start" })
-      vim.keymap.set({ "n", "x", "o" }, "[m", function()
-        move.goto_previous_start("@function.outer", "textobjects")
-      end, { desc = "Previous method start" })
-
-      -- Custom remaps
-      vim.keymap.set("n", "åå", "]m", { remap = true, desc = "Method down" })
-      vim.keymap.set("n", "ää", "[m", { remap = true, desc = "Method up" })
+      vim.keymap.set("n", "ää", "]m", { remap = true, desc = "Method down" })
+      vim.keymap.set("n", "åå", "[m", { remap = true, desc = "Method up" })
     end,
   },
 }

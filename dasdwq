@@ -1,0 +1,80 @@
+[33mcommit 7453bf9623d65ccab67b8e4d73b2ca7ab1550ca3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: antabuz <momandersson@gmail.com>
+Date:   Sun May 3 00:22:12 2026 +0200
+
+    Update dependencies for refactoring.nvim
+
+[1mdiff --git a/nvim/.config/nvim/lua/custom/plugins/refactoring.lua b/nvim/.config/nvim/lua/custom/plugins/refactoring.lua[m
+[1mindex 796bddf..17bbe76 100644[m
+[1m--- a/nvim/.config/nvim/lua/custom/plugins/refactoring.lua[m
+[1m+++ b/nvim/.config/nvim/lua/custom/plugins/refactoring.lua[m
+[36m@@ -1,27 +1,54 @@[m
+ -- lua/custom/plugins/refactoring.lua[m
+ return {[m
+[31m-  'ThePrimeagen/refactoring.nvim',[m
+[31m-  dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },[m
+[32m+[m[32m  "ThePrimeagen/refactoring.nvim",[m
+[32m+[m[32m  dependencies = {[m
+[32m+[m[32m    "lewis6991/async.nvim",[m
+[32m+[m[32m  },[m
+   lazy = false, -- keep eager so the :Refactor command exists immediately[m
+   opts = {}, -- defaults are fine unless you want to tweak[m
+   keys = {[m
+[31m-    { '<leader>re', ':Refactor extract ', mode = 'x', desc = 'Refactor: extract (select symbol/name)' },[m
+[31m-    { '<leader>rf', ':Refactor extract_to_file ', mode = 'x', desc = 'Refactor: extract to file (select path)' },[m
+[31m-    { '<leader>rv', ':Refactor extract_var ', mode = 'x', desc = 'Refactor: extract variable (name…)' },[m
+[1;35m-[m
+[31m-    { '<leader>ri', ':Refactor inline_var<CR>', mode = { 'n', 'x' }, desc = 'Refactor: inline variable' },[m
+[31m-    { '<leader>rI', ':Refactor inline_func<CR>', mode = 'n', desc = 'Refactor: inline function' },[m
+[1;35m-[m
+[31m-    { '<leader>rb', ':Refactor extract_block<CR>', mode = 'n', desc = 'Refactor: extract block' },[m
+[31m-    { '<leader>rbf', ':Refactor extract_block_to_file<CR>', mode = 'n', desc = 'Refactor: extract block to file' },[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "<leader>re",[m
+[32m+[m[32m      ":Refactor extract ",[m
+[32m+[m[32m      mode = "x",[m
+[32m+[m[32m      desc = "Refactor: extract (select symbol/name)",[m
+[32m+[m[32m    },[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "<leader>rf",[m
+[32m+[m[32m      ":Refactor extract_to_file ",[m
+[32m+[m[32m      mode = "x",[m
+[32m+[m[32m      desc = "Refactor: extract to file (select path)",[m
+[32m+[m[32m    },[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "<leader>rv",[m
+[32m+[m[32m      ":Refactor extract_var ",[m
+[32m+[m[32m      mode = "x",[m
+[32m+[m[32m      desc = "Refactor: extract variable (name…)",[m
+[32m+[m[32m    },[m
+ [m
+     {[m
+[31m-      '<leader>rr',[m
+[32m+[m[32m      "<leader>ri",[m
+[32m+[m[32m      ":Refactor inline_var<CR>",[m
+[32m+[m[32m      mode = { "n", "x" },[m
+[32m+[m[32m      desc = "Refactor: inline variable",[m
+[32m+[m[32m    },[m
+[32m+[m[32m    { "<leader>rI", ":Refactor inline_func<CR>", mode = "n", desc = "Refactor: inline function" },[m
+[1;36m+[m
+[32m+[m[32m    { "<leader>rb", ":Refactor extract_block<CR>", mode = "n", desc = "Refactor: extract block" },[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "<leader>rbf",[m
+[32m+[m[32m      ":Refactor extract_block_to_file<CR>",[m
+[32m+[m[32m      mode = "n",[m
+[32m+[m[32m      desc = "Refactor: extract block to file",[m
+[32m+[m[32m    },[m
+[1;36m+[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "<leader>rr",[m
+       function()[m
+[31m-        require('refactoring').select_refactor()[m
+[32m+[m[32m        require("refactoring").select_refactor()[m
+       end,[m
+[31m-      mode = { 'n', 'x' },[m
+[31m-      desc = 'Refactor: select…',[m
+[32m+[m[32m      mode = { "n", "x" },[m
+[32m+[m[32m      desc = "Refactor: select…",[m
+     },[m
+   },[m
+ }[m
