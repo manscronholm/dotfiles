@@ -13,6 +13,14 @@ if is_linux then
   require("omarchy")
 end
 
+-- Roslyn's language server is a native apphost that doesn't resolve `dotnet`
+-- via PATH; it only checks DOTNET_ROOT(_ARM64) or a few hardcoded locations.
+-- Homebrew's dotnet formula doesn't register any of those, so point it there.
+if not is_linux and vim.fn.isdirectory("/opt/homebrew/opt/dotnet/libexec") == 1 then
+  vim.env.DOTNET_ROOT = "/opt/homebrew/opt/dotnet/libexec"
+  vim.env.DOTNET_ROOT_ARM64 = "/opt/homebrew/opt/dotnet/libexec"
+end
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
