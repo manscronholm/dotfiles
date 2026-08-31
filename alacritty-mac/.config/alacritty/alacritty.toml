@@ -19,5 +19,8 @@ opacity = 0.95
 [keyboard]
 bindings = [
 { key = "Insert", mods = "Shift", action = "Paste" },
-{ key = "Insert", mods = "Control", action = "Copy" }
+{ key = "Insert", mods = "Control", action = "Copy" },
+{ key = "B", mods = "Control|Shift", action = "IncreaseFontSize" },
+{ key = "-", mods = "Control", action = "DecreaseFontSize" },
+{ key = "0", mods = "Control", action = "ResetFontSize" }
 ]
