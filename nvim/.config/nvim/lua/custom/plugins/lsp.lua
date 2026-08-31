@@ -36,7 +36,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
       "saghen/blink.cmp",
-      "tris203/rzls.nvim",
     },
     config = function()
       local function azure_pipelines_root(bufnr, on_dir)
@@ -189,7 +188,6 @@ return {
         },
         jsonls = {},
         lua_ls = { settings = { Lua = { completion = { callSnippet = "Replace" } } } },
-        rzls = {},
         lemminx = {},
         powershell_es = {
           bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
