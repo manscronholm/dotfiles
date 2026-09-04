@@ -1,5 +1,0 @@
-require("omarchy.all-themes")
-require("omarchy.theme")
-require("omarchy.disable-news-alert")
-require("omarchy.omarchy-theme-hotreload")
-require("omarchy.snacks-animated-scrolling-off")

@@ -9,10 +9,6 @@ require("config.autocmds")
 -- Platform detection: load Omarchy theme system on Linux, standalone Catppuccin on macOS
 local is_linux = vim.fn.has("linux") == 1
 
-if is_linux then
-  require("omarchy")
-end
-
 -- Roslyn's language server is a native apphost that doesn't resolve `dotnet`
 -- via PATH; it only checks DOTNET_ROOT(_ARM64) or a few hardcoded locations.
 -- Homebrew's dotnet formula doesn't register any of those, so point it there.
@@ -35,10 +31,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   "tpope/vim-sleuth",
   { import = "custom.plugins" },
-  { import = "colorscheme", cond = not is_linux },
-  { import = "omarchy.theme", cond = is_linux },
-  { import = "omarchy.shim", cond = is_linux },
-  { import = "omarchy.omarchy-theme-hotreload", cond = is_linux },
+  { import = "colorscheme" },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
