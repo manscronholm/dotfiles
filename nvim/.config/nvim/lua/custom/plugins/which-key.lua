@@ -58,6 +58,7 @@ return {
       { '<leader>g', group = '[G]o to' },
       { '<leader>t', group = '[T]erminal' },
       { '<leader>n', group = '[N]oice' },
+      { '<leader>o', group = '[O]cto (GitHub)' },
       { '<leader>§', group = 'Copilot' },
     },
   },
