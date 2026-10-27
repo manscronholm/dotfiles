@@ -2,8 +2,9 @@
 -- every copy is emitted as OSC 52 (inside tmux this becomes a tmux buffer,
 -- rebroadcast to every attached client, local or SSH). Paste prefers the
 -- local Wayland clipboard when one is available, so content copied in other
--- apps remains pasteable; without a display, paste is an OSC 52 query that
--- tmux (or the terminal) answers.
+-- apps remains pasteable; on local macOS, use pbcopy/pbpaste instead.
+-- Without a local clipboard, paste is an OSC 52 query that tmux (or the
+-- terminal) answers.
 local M = {}
 
 local function proc_lines(pid, file)
@@ -53,6 +54,10 @@ function M.setup()
   local has_wayland = vim.env.WAYLAND_DISPLAY ~= nil
     and vim.fn.executable("wl-copy") == 1
     and vim.fn.executable("wl-paste") == 1
+  local has_mac_clipboard = not in_ssh
+    and vim.fn.has("mac") == 1
+    and vim.fn.executable("pbcopy") == 1
+    and vim.fn.executable("pbpaste") == 1
 
   local function copy(register)
     local emit = osc52.copy(register)
@@ -64,6 +69,8 @@ function M.setup()
           cmd[#cmd + 1] = "--primary"
         end
         vim.fn.system(cmd, lines)
+      elseif has_mac_clipboard then
+        vim.fn.system({ "pbcopy" }, lines)
       end
 
       if vim.g.omarchy_remote_clipboard_osc52 ~= false then
@@ -73,11 +80,16 @@ function M.setup()
   end
 
   local function paste(register)
-    if not has_wayland then
+    if not has_wayland and not has_mac_clipboard then
       return osc52.paste(register)
     end
 
     return function()
+      if has_mac_clipboard then
+        local lines = vim.fn.systemlist({ "pbpaste" }, "", 1)
+        return vim.v.shell_error == 0 and lines or {}
+      end
+
       local cmd = { "wl-paste", "--no-newline" }
       if register == "*" then
         cmd[#cmd + 1] = "--primary"
